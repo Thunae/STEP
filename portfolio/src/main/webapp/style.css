@@ -1,7 +1,10 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: auto;
+  height: 600px;
+  background-image: url('images/ryan-background.jpg');
+  background-color: gray;
 }
 
 #greeting-container {
