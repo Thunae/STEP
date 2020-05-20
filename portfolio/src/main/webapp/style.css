@@ -7,3 +7,13 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#header{
+    display: flex;
+    flex-direction: row;
+}
+
+#headerLogos{
+    display: flex;
+    flex-direction: row;
+}
