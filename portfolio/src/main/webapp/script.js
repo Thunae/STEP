@@ -26,3 +26,6 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+function successfulSubmit() {
+    alert("Thank you for contacting me");
+}
