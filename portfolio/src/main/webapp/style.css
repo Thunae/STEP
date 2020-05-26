@@ -32,8 +32,9 @@ body{
 }
 
 .mainImg{
-    background-image: url('images/ryan-background.jpg');
-    background-size: auto;
+    background-image: url('images/newBackground.jpg');
+    background-size: cover;
+    height: 75%;
     background-color: gray;
     background-repeat: no-repeat;
 }
