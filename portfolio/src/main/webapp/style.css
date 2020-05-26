@@ -30,3 +30,10 @@ body{
     text-align: center;
     color:whitesmoke;
 }
+
+.mainImg{
+    background-image: url('images/ryan-background.jpg');
+    background-size: auto;
+    background-color: gray;
+    background-repeat: no-repeat;
+}
