@@ -37,6 +37,7 @@ body{
     height: 75%;
     background-color: gray;
     background-repeat: no-repeat;
+    text-align: left;
 }
 
 .banner{
@@ -47,4 +48,15 @@ body{
     color: #F1EDEC;
     border-left: 6px solid #F1EDEC;
     transform: rotate(180deg);
+}
+
+.skillIcon{
+    background-color: #4285F4; 
+    border: 0px; 
+    height: 300px; 
+    text-align: center;
+}
+
+.skillBox{
+    text-align: center;
 }
