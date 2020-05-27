@@ -38,3 +38,13 @@ body{
     background-color: gray;
     background-repeat: no-repeat;
 }
+
+.banner{
+    writing-mode: vertical-rl;
+    text-orientation: sideways-right;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 85px;
+    color: #F1EDEC;
+    border-left: 6px solid #F1EDEC;
+    transform: rotate(180deg);
+}
