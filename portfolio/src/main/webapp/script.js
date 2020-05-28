@@ -26,6 +26,69 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+window.addEventListener("load", function(){
+    const page = document.querySelector(".menu-page");
+    page.className += " appear";
+});
+
 function successfulSubmit() {
     alert("Thank you for contacting me");
+}
+
+function fadeOut(){
+    document.getElementsByClassName("page")[0].style.opacity = '0';
+    setTimeout(()=> {window.location.href = "./main.html";}, 1000);
+}
+
+//From Week-3 Tutorial
+function getComments() {
+  numComments = localStorage.getItem("num-of-comments");
+  console.log(numComments);
+  fetch(`/comments?num-comments=${numComments}`).then(response => response.json()).then((comment) => {
+    console.log(comment);
+    container = document.getElementsByClassName('comments-section')[0];
+    container.innerHTML = "";
+    for (item in comment){
+        container.appendChild(createListElement(comment[item]));
+    }
+  });
+  document.getElementsByName('num-comments')[0].value = numComments;
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(comment) {
+  const liElement = document.createElement('li');
+  liElement.className += "comment-list";
+  
+  fetch("/comment.html").then(response=>response.text()).then(data =>{
+      console.log(data);
+      liElement.innerHTML = data;
+      console.log(liElement.getElementsByClassName("comment-words"));
+      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
+
+      deleteButtonElement = liElement.getElementsByClassName('comment-delete')[0];
+      deleteButtonElement.addEventListener('click', () => {
+      deleteComment(comment);
+
+      // Remove the task from the DOM.
+      liElement.remove();
+    });
+    liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
+      
+  });
+
+  return liElement;
+}
+
+function amountOfComments(){
+    num = document.getElementsByName('num-comments')[0].value;
+    localStorage.setItem("num-of-comments", num);
+    getComments();
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-data', {method: 'POST', body: params}).then(getComments());
 }
