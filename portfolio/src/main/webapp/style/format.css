@@ -7,7 +7,7 @@ body{
     margin: 0;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 17px;
-    color: #926239;
+    color: gray;
     line-height: 1.6;
 }
 
@@ -37,14 +37,14 @@ body{
 #showcase .button{
     font-size: 18px;
     text-decoration: none;
-    color: #925239;
-    border: #926239 1px solid;
+    color: gray;
+    border: gray 1px solid;
     padding: 10px 20px;
     border-radius:10px;
 }
 
 #showcase .button:hover{
-    background: #926239;
+    background: gray;
     color:#fff;
 }
 
@@ -116,7 +116,7 @@ body{
 #spacer{
     background-color: transparent;
     height: 80vh;
-    flex: 15;
+    flex: 20;
     transition: 1s;
 }
 
@@ -131,6 +131,8 @@ body{
     font-size: 85px;
     color: #F1EDEC;
     transform: rotate(180deg);
+    padding: 2px;
+    margin-right: 2px;
 }
 
 .banner{
@@ -181,7 +183,7 @@ body{
 }
 .icon{
     height: 40px;
-    padding: 2px;
+    padding: 4px;
     width: auto;
     background-color: transparent;
 }
