@@ -259,6 +259,7 @@ body {
 
 .quadrant:hover {
 	flex: 1.4;
+    justify-content: center;
 }
 
 .title {
@@ -268,21 +269,34 @@ body {
 	text-align: center;
 	vertical-align: middle;
 	align-items: center;
-	transition: 3s
+	transition: 1.5s
 }
 
 .label {
 	color: transparent;
+    visibility: hidden;
 	line-height: 1.2;
-	transition: 3s;
+	transition: 1.7s;
 	font-style: italic;
 	font-size: 32;
 	flex: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: top;
+    width: 100%;
 }
 
 .quadrant:hover .label {
+    visibility: visible;
 	color: antiquewhite;
-	flex: 1;
+	flex: .5;
+    justify-content: space-around;
+}
+
+.quadrant:hover .formatter{
+    flex: .25;
 }
 
 #page {
@@ -304,4 +318,35 @@ body {
 		opacity: 1;
 		visibility: visible;
 	}
+}
+
+a{
+    text-decoration: none;
+}
+
+.thumb{
+    height: 1px;
+    padding: 2px;
+    opacity: 0;
+    transition: 1s;
+}
+
+.quadrant:hover .thumb{
+    visibility: visible;
+	opacity: 1;
+    transform: scale(150);
+}
+
+.sub{
+    color: transparent;
+    visibility: hidden;
+    transition: 1s;
+    line-height: 1;
+    margin-top: -30px;
+}
+
+.quadrant:hover .sub{
+    color: antiquewhite;
+    visibility: visible;
+    text-align: center;
 }
