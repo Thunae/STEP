@@ -299,16 +299,16 @@ body {
     flex: .25;
 }
 
-#page {
+.page {
 	transition: opacity 1.5s;
 }
 
-#menu-page {
+.menu-page {
 	opacity: 0;
 	visibility: hidden;
 }
 
-#menu-page.appear {
+.appear {
 	animation: appear 2s;
 	animation-fill-mode: forwards;
 }
@@ -349,4 +349,12 @@ a{
     color: antiquewhite;
     visibility: visible;
     text-align: center;
+}
+
+.skills-background{
+    background-color: #DB4437;
+}
+
+.about-background{
+    background-color: #4285F4;
 }

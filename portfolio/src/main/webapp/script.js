@@ -32,7 +32,7 @@ function successfulSubmit() {
 }
 
 function fadeOut(){
-    const page = document.getElementById("page");
-    page.style.opacity = '0';
+    var page = document.getElementsByClassName("page");
+    page[0].style.opacity = '0';
     setTimeout(function(){window.location.href = "./main.html";}, 1000);
 }
