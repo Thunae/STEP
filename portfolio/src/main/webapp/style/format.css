@@ -353,8 +353,20 @@ a{
 
 .skills-background{
     background-color: #DB4437;
+    height: 100vh;
 }
 
 .about-background{
     background-color: #4285F4;
+    height: 100vh;
+}
+
+.work-background{
+    background-color: #F4B400;
+    height: 100vh;
+}
+
+.more-background{
+    background-color: #0F9D58;
+    height: 100vh;
 }
