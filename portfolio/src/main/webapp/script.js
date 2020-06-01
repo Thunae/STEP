@@ -27,6 +27,11 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+window.addEventListener("load", function(){
+    const page = document.querySelector(".menu-page");
+    page.className += " appear";
+});
+
 function successfulSubmit() {
     alert("Thank you for contacting me");
 }
@@ -36,3 +41,11 @@ function fadeOut(){
     page[0].style.opacity = '0';
     setTimeout(function(){window.location.href = "./main.html";}, 1000);
 }
+
+function getGreeting() {
+  console.log('Handling the response.');
+  fetch('/data').then(response => response.text()).then((quote) => {
+    document.getElementsByClassName('greeting-cont')[0].innerText = quote;
+  });
+}
+
