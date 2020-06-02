@@ -37,8 +37,8 @@ function successfulSubmit() {
 }
 
 function fadeOut(){
-    (document.getElementsByClassName("page")[0].style.opacity = '0').then(
-        setTimeout(function(){window.location.href = "./main.html";}, 1000));
+    document.getElementsByClassName("page")[0].style.opacity = '0';
+    setTimeout(()=> {window.location.href = "./main.html";}, 1000);
 }
 
 //From Week-3 Tutorial
