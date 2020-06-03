@@ -44,8 +44,19 @@ function fadeOut(){
 //From Week-3 Tutorial
 function getGreeting() {
   console.log('Handling the response.');
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementsByClassName('greeting-cont')[0].innerText = quote;
+  fetch('/data').then(response => response.json()).then((greetings) => {
+    console.log(greetings);
+    container = document.getElementsByClassName('greeting-cont')[0];
+    container.innerHTML = '';
+    container.appendChild(createListElement(greetings[0]));
+    container.appendChild(createListElement(greetings[1]));
+    container.appendChild(createListElement(greetings[2]));
   });
 }
 
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
