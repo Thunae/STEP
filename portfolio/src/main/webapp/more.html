@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="style/format.css">
     <script src="script.js"> </script>
   </head>
-  <body class="menu-page page">
+  <body class="menu-page page" onload="getComments()">
     <div class="more-background">
-      <div class="greeting-cont"></div>
-      <button class="button" onclick="getGreeting()">CLICK ME</button>
+      <ul class="comments-section"></ul>
+      <form class="comments-new" action="/comments" method="POST">
+          <p>Comments:</p>
+          <input type="text" name = "comment">
+          <br></br>
+          <input class="button" type="submit"/>
+      </form>
     </div>
   </body>
   <footer>
