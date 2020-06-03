@@ -42,15 +42,14 @@ function fadeOut(){
 }
 
 //From Week-3 Tutorial
-function getGreeting() {
+function getComments() {
   console.log('Handling the response.');
-  fetch('/data').then(response => response.json()).then((greetings) => {
-    console.log(greetings);
-    container = document.getElementsByClassName('greeting-cont')[0];
-    container.innerHTML = '';
-    container.appendChild(createListElement(greetings[0]));
-    container.appendChild(createListElement(greetings[1]));
-    container.appendChild(createListElement(greetings[2]));
+  fetch('/comments').then(response => response.json()).then((comment) => {
+    console.log(comment);
+    container = document.getElementsByClassName('comments-section')[0];
+    for (item in comment){
+        container.appendChild(createListElement(comment[item]));
+    }
   });
 }
 
