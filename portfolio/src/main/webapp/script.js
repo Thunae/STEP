@@ -43,19 +43,47 @@ function fadeOut(){
 
 //From Week-3 Tutorial
 function getComments() {
-  console.log('Handling the response.');
-  fetch('/comments').then(response => response.json()).then((comment) => {
+  numComments = localStorage.getItem("num-of-comments");
+  console.log(numComments);
+  fetch(`/comments?num-comments=${numComments}`).then(response => response.json()).then((comment) => {
     console.log(comment);
     container = document.getElementsByClassName('comments-section')[0];
+    container.innerHTML = "";
     for (item in comment){
         container.appendChild(createListElement(comment[item]));
     }
   });
+  document.getElementsByName('num-comments')[0].value = numComments;
 }
 
 /** Creates an <li> element containing text. */
-function createListElement(text) {
+function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  const contentElement = document.createElement('span');
+  contentElement.innerText = comment.content;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+
+    // Remove the task from the DOM.
+    liElement.remove();
+  });
+  liElement.appendChild(contentElement);
+  liElement.appendChild(deleteButtonElement);
   return liElement;
+}
+
+function amountOfComments(){
+    num = document.getElementsByName('num-comments')[0].value;
+    localStorage.setItem("num-of-comments", num);
+    getComments();
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-data', {method: 'POST', body: params});
+  setTimeout(getComments(), 500);
 }

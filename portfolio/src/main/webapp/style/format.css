@@ -294,10 +294,12 @@ a{
 }
 
 .comments-section{
-    display: flex;
     width: 100%;
     background-color: antiquewhite;
     color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .comments-new{
