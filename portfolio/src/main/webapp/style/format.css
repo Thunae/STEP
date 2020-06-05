@@ -295,14 +295,88 @@ a{
 
 .comments-section{
     width: 100%;
-    background-color: antiquewhite;
-    color: gray;
+    background-color: white;
+    color: darkslategray;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
 }
 
 .comments-new{
-    background-color: antiquewhite;
+    background-color: white;
+    color: darkslategray;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#num-comments{
+    border: none;
+    background-color: transparent;
+}
+
+.comment{
+    display: flex;
+    flex-direction: row;
+    border-bottom: darkslategray 2px solid;
+}
+
+.profile-pic{
+    height: 70px;
+    width: auto;
+    padding: 2px;
+}
+
+.comment-user{
+    font-size: 16px;
+    padding: 4px;
+    margin: 1px 1px;
+}
+
+.comment-date{
+    font-size: 14px;
+    flex: 1;
     color: gray;
+    opacity: 0.9;
+    text-align: center;
+    margin: 1px 1px;
+}
+.comment-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.comment-buttons{
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    align-items: center;
+}
+
+.comment-delete{
+    padding: 4px;
+    display: flex;
+}
+
+.comment-edit{
+    padding: 4px;
+    display: flex;
+    width: auto;
+}
+
+.comment-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 30vw;
+    word-wrap: break-word;
+}
+
+.comment-words{
+    text-align: left;
+    font-size: 12px;
+    padding: 2px;
 }

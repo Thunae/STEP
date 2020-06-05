@@ -30,6 +30,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import java.text.SimpleDateFormat;  
+import java.util.Date; 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments")
@@ -53,10 +55,11 @@ public class DataServlet extends HttpServlet {
     List<Comment> comments = new ArrayList<>();
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(commentAmount))) {
       String content = (String) entity.getProperty("content");
+      String date = (String) entity.getProperty("date");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment comment = new Comment(content, timestamp, id);
+      Comment comment = new Comment(content, timestamp, id, date);
       comments.add(comment);
     }
 
@@ -70,11 +73,16 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
+    SimpleDateFormat formatter= new SimpleDateFormat("MMM d, 'at' HH:mm");
+    Date date = new Date(System.currentTimeMillis());
+    String formattedDate = formatter.format(date);
+    
     
     //Make an entity
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", newComment);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("date", formattedDate);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);

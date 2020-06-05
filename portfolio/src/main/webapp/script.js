@@ -59,19 +59,25 @@ function getComments() {
 /** Creates an <li> element containing text. */
 function createListElement(comment) {
   const liElement = document.createElement('li');
-  const contentElement = document.createElement('span');
-  contentElement.innerText = comment.content;
+  liElement.className += "comment-list";
+  
+  fetch("/comment.html").then(response=>response.text()).then(data =>{
+      console.log(data);
+      liElement.innerHTML = data;
+      console.log(liElement.getElementsByClassName("comment-words"));
+      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
 
-  const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
-    deleteComment(comment);
+      deleteButtonElement = liElement.getElementsByClassName('comment-delete')[0];
+      deleteButtonElement.addEventListener('click', () => {
+      deleteComment(comment);
 
-    // Remove the task from the DOM.
-    liElement.remove();
+      // Remove the task from the DOM.
+      liElement.remove();
+    });
+    liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
+      
   });
-  liElement.appendChild(contentElement);
-  liElement.appendChild(deleteButtonElement);
+
   return liElement;
 }
 
@@ -84,6 +90,5 @@ function amountOfComments(){
 function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
-  fetch('/delete-data', {method: 'POST', body: params});
-  setTimeout(getComments(), 500);
+  fetch('/delete-data', {method: 'POST', body: params}).then(getComments());
 }
