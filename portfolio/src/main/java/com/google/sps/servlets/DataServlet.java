@@ -73,7 +73,7 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
-    SimpleDateFormat formatter= new SimpleDateFormat("MMM d, 'at' HH:mm");
+    SimpleDateFormat formatter = new SimpleDateFormat("MMM d, 'at' HH:mm");
     Date date = new Date(System.currentTimeMillis());
     String formattedDate = formatter.format(date);
     
