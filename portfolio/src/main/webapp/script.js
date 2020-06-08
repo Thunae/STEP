@@ -43,13 +43,12 @@ function fadeOut(){
 
 //From Week-3 Tutorial
 function getComments() {
+  //Get the number of comments to show per page
   numComments = localStorage.getItem("num-of-comments");
-  console.log(numComments);
   fetch(`/comments?num-comments=${numComments}`).then(response => response.json()).then((comment) => {
-    console.log(comment);
     container = document.getElementsByClassName('comments-section')[0];
     container.innerHTML = "";
-    for (item in comment){
+    for (item in comment) {
         container.appendChild(createListElement(comment[item]));
     }
   });
@@ -62,16 +61,14 @@ function createListElement(comment) {
   liElement.className += "comment-list";
   
   fetch("/comment.html").then(response=>response.text()).then(data =>{
-      console.log(data);
       liElement.innerHTML = data;
-      console.log(liElement.getElementsByClassName("comment-words"));
       liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
-
+      //Add funcitonality to the delete button
       deleteButtonElement = liElement.getElementsByClassName('comment-delete')[0];
       deleteButtonElement.addEventListener('click', () => {
       deleteComment(comment);
 
-      // Remove the task from the DOM.
+      // Remove the comment from the DOM.
       liElement.remove();
     });
     liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
@@ -82,12 +79,14 @@ function createListElement(comment) {
 }
 
 function amountOfComments(){
+    //The program will remember the number of comments the user wants to display
     num = document.getElementsByName('num-comments')[0].value;
     localStorage.setItem("num-of-comments", num);
     getComments();
 }
 
 function deleteComment(comment) {
+  //Remove a comment and then reload the number of comments
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-data', {method: 'POST', body: params}).then(getComments());
