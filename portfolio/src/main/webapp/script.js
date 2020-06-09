@@ -81,8 +81,8 @@ function createListElement(comment) {
         // Remove the comment from the DOM.
         liElement.remove();
       });
-      liElement.getElementsByClassName("comment-date")[0].innerText =
-        comment.date;
+      liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
+      liElement.getElementsByClassName("comment-user")[0].innerText = comment.user;
     });
 
   return liElement;
@@ -102,4 +102,35 @@ function deleteComment(comment) {
   fetch("/delete-data", { method: "POST", body: params }).then(() =>
     getComments()
   );
+}
+
+function checkLogin(){
+    fetch("/login").then(response => response.json()).then(loginStatus => {
+        if(loginStatus.loggedIn){
+            document.getElementById("new-comment").style.visibility="visible";
+            document.getElementById("login-button").style.visibility="hidden";
+            var logoutButton = document.getElementById("logout-button");
+            logoutButton.href = loginStatus.url;
+            logoutButton.style.visibility="visible";
+        }
+        else{
+            document.getElementById("new-comment").style.visibility="hidden";
+            document.getElementById("logout-button").style.visibility="hidden";
+            var loginButton = document.getElementById("login-button");
+            loginButton.style.visibility="visible";
+            loginButton.href = loginStatus.url;
+        }
+    });
+}
+
+function setup(){
+    checkLogin();
+    getComments();
+}
+
+function createMap() {
+  console.log("Making a map");
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 42.295278, lng: -83.710583}, zoom: 12});
 }

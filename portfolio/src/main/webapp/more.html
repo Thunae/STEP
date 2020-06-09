@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="style/format.css">
     <script src="script.js"> </script>
   </head>
-  <body class="menu-page page" onload="getComments()">
+  <body class="menu-page page" onload="setup()">
     <div class="more-background">
-      <form class="comments-new">
+      <form class="comments-new" autocomplete="off">
           <label for="num-comments"> Comments Per Page:</label>
           <input type="number" value="1" name="num-comments" id="num-comments" onchange="amountOfComments()">
       </form>
-      <form class="comments-new" action="/comments" method="POST">
+      <a href="#" id="login-button">LOGIN</a>
+      <a href="#" id="logout-button">LOGOUT</a>
+      <form class="comments-new" id="new-comment" action="/comments" method="POST" autocomplete="off">
           <p>Comments:</p>
           <input type="text" name="comment"/>
           <br></br>
