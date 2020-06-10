@@ -7,9 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style/format.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLFW4By8Q8bHSAVIp1LS5r0D_dD8_Ghlg"></script>
+    <script src="script.js"></script>
   </head>
-  <body class="menu-page page">
-    <div class="about-background"></div>
+  <body class="menu-page page" onload="createMap();">
+    <div class="about-background">
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+        <div id="about-description"></div>
+        <div id="about-pictures"></div>
+    </div>
     <script src="script.js"></script>
   </body>
   <footer>

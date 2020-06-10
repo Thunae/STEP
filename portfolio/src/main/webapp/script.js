@@ -127,3 +127,10 @@ function setup(){
     checkLogin();
     getComments();
 }
+
+function createMap() {
+  console.log("Making a map");
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 42.295278, lng: -83.710583}, zoom: 12});
+}
