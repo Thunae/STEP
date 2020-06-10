@@ -424,3 +424,14 @@ a {
     background-color: transparent;
     color: black;
 }
+
+.about-header{
+    border-bottom: 3px solid black;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.about-body{
+    border-bottom: 3px solid black;
+}
