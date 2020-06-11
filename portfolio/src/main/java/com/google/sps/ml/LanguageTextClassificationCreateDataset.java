@@ -12,9 +12,8 @@ class LanguageTextClassificationCreateDataset {
 
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException {
-    // TODO(developer): Replace these variables before running the sample.
     String projectId = "ryangudal-step-2020";
-    String displayName = "happydb";
+    String displayName = "happy-db";
     createDataset(projectId, displayName);
   }
 
@@ -48,15 +47,6 @@ class LanguageTextClassificationCreateDataset {
           client.createDatasetAsync(projectLocation, dataset);
 
       Dataset createdDataset = future.get();
-
-      // Display the dataset information.
-      System.out.format("Dataset name: %s\n", createdDataset.getName());
-      // To get the dataset id, you have to parse it out of the `name` field. As dataset Ids are
-      // required for other methods.
-      // Name Form: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`
-      String[] names = createdDataset.getName().split("/");
-      String datasetId = names[names.length - 1];
-      System.out.format("Dataset id: %s\n", datasetId);
     }
   }
 }

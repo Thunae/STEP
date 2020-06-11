@@ -104,7 +104,7 @@ function deleteComment(comment) {
   );
 }
 
-function checkLogin(){
+function displayLoginStatus(){
     fetch("/login").then(response => response.json()).then(loginStatus => {
         if(loginStatus.loggedIn){
             document.getElementById("new-comment").style.visibility="visible";
@@ -124,7 +124,7 @@ function checkLogin(){
 }
 
 function setup(){
-    checkLogin();
+    displayLoginStatus();
     getComments();
 }
 
