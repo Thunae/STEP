@@ -12,14 +12,8 @@ class LanguageTextClassificationCreateDataset {
 
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException {
-<<<<<<< HEAD
     String projectId = "ryangudal-step-2020";
     String displayName = "happy-db";
-=======
-    // TODO(developer): Replace these variables before running the sample.
-    String projectId = "ryangudal-step-2020";
-    String displayName = "happydb";
->>>>>>> 36293dd4b341b91c19d42bacda96280b95f87656
     createDataset(projectId, displayName);
   }
 
