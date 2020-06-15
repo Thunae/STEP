@@ -68,9 +68,11 @@ body {
   flex-direction: column;
   justify-content: center;
   opacity: 1;
+  height: 7vh;
   clear: both;
-  position: relative;
-  margin-top: -50px;
+  z-index: 100;
+  width: 100%;
+  bottom: 0;
 }
 
 .footer-links {
@@ -120,7 +122,9 @@ body {
 .wrapper {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: 93vh;
+  width: 100vw;
+  flex-wrap: wrap;
 }
 
 .col {
@@ -133,7 +137,7 @@ body {
 
 .quadrant {
   background-color: green;
-  flex: 1;
+  flex: 1 0.6;
   border: black solid 2px;
   transition: 2s;
   color: antiquewhite;
@@ -164,7 +168,7 @@ body {
 }
 
 .quadrant:hover {
-  flex: 1.4;
+  flex: 1.4 0.6;
   justify-content: center;
 }
 
@@ -231,16 +235,17 @@ a {
 }
 
 .thumb {
-  height: 1px;
-  padding: 2px;
+  height: 150px;
+  transition-delay: 0.5s;
+  transition-property: all;
+  transition-duration: 3s;
+  display: none;
   opacity: 0;
-  transition: 1s;
 }
 
 .quadrant:hover .thumb {
-  visibility: visible;
+  display: inline-block;
   opacity: 1;
-  transform: scale(150);
 }
 
 .sub {
@@ -259,7 +264,141 @@ a {
 
 .skills-background {
   background-color: #db4437;
-  height: 100vh;
+  height: 87vh;
+  display: grid;
+  grid-template-columns: 0.5fr repeat(2, 1fr) 0.5fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  padding-top: 3vh;
+  padding-left: 14vw;
+  padding-right: 14vw;
+  padding-bottom: 3vh;
+  perspective: 100px;
+  text-align: center;
+}
+
+.skills-card {
+  background-color: white;
+  border: solid 2px lightslategrey;
+  transition: 0.2s;
+  color: black;
+}
+
+.skills-card:hover {
+  border: solid 4px blue;
+}
+
+.skill-title {
+  border-bottom: 2px solid gray;
+  font-size: 3rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.skill-description {
+  font-size: 25px;
+}
+
+.skill-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 20px;
+}
+
+.skills-card:nth-child(1) {
+  background: rgb(241, 230, 225);
+  grid-row: 2/4;
+  grid-column: 2/4;
+}
+
+.skills-card:nth-child(1):hover {
+  border: 2px solid lightslategray;
+}
+
+#main-display {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.skills-card:nth-child(2) {
+  background-image: url(../images/cppLogo.png);
+  background-color: #f6f6f6;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.skills-card:nth-child(3) {
+  background-image: url(../images/pythonLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(4) {
+  background-image: url(../images/javaLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(5) {
+  background-image: url(../images/htmlLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(6) {
+  background-image: url(../images/cssLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(7) {
+  background-image: url(../images/jsLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(8) {
+  background-image: url(../images/gitLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(9) {
+  background-image: url(../images/bashLogo.jpg);
+  background-color: #f6f6f6;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(10) {
+  background-image: url(../images/matlabLogo.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.skills-card:nth-child(11) {
+  background-image: url(../images/gcpLogo.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.skills-card:nth-child(12) {
+  background-image: url(../images/sqlLogo.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.skills-card:nth-child(13) {
+  background-image: url(../images/officeLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .about-background {
