@@ -266,30 +266,61 @@ a {
   background-color: #db4437;
   height: 87vh;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:  0.5fr repeat(2, 1fr) 0.5fr;
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   padding-top: 3vh;
-  padding-left: 7vw;
-  padding-right: 7vw;
+  padding-left: 14vw;
+  padding-right: 14vw;
   padding-bottom: 3vh;
   perspective: 100px;
+  text-align: center;
 }
 
 .skills-card{
   background-color: white;
   border: solid 2px lightslategrey;
   transition: .2s;
+  color: black;
 }
 
 .skills-card:hover{
   border: solid 4px blue;
 }
 
+.skill-title{
+  border-bottom: 2px solid gray;
+  font-size: 3rem;
+}
+
+ul{
+  list-style-type: none;
+}
+
+.skill-description{
+  font-size: 25px;
+}
+
+.skill-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 20px;
+}
+
 .skills-card:nth-child(1){
-  background: rgb(157, 168, 179);
+  background: rgb(241, 230, 225);
   grid-row: 2/4;
   grid-column: 2/4;
+}
+
+.skills-card:nth-child(1):hover{
+  border: 2px solid lightslategray;
+}
+
+#main-display{
+  opacity: 1;
+  transition: opacity .5s;
 }
 
 .skills-card:nth-child(2){
