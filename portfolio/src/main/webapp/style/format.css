@@ -236,7 +236,7 @@ a {
 
 .thumb {
   height: 150px;
-  transition-delay: .5s;
+  transition-delay: 0.5s;
   transition-property: all;
   transition-duration: 3s;
   display: none;
@@ -266,7 +266,7 @@ a {
   background-color: #db4437;
   height: 87vh;
   display: grid;
-  grid-template-columns:  0.5fr repeat(2, 1fr) 0.5fr;
+  grid-template-columns: 0.5fr repeat(2, 1fr) 0.5fr;
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   padding-top: 3vh;
@@ -277,53 +277,53 @@ a {
   text-align: center;
 }
 
-.skills-card{
+.skills-card {
   background-color: white;
   border: solid 2px lightslategrey;
-  transition: .2s;
+  transition: 0.2s;
   color: black;
 }
 
-.skills-card:hover{
+.skills-card:hover {
   border: solid 4px blue;
 }
 
-.skill-title{
+.skill-title {
   border-bottom: 2px solid gray;
   font-size: 3rem;
 }
 
-ul{
+ul {
   list-style-type: none;
 }
 
-.skill-description{
+.skill-description {
   font-size: 25px;
 }
 
-.skill-container{
+.skill-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   font-size: 20px;
 }
 
-.skills-card:nth-child(1){
+.skills-card:nth-child(1) {
   background: rgb(241, 230, 225);
   grid-row: 2/4;
   grid-column: 2/4;
 }
 
-.skills-card:nth-child(1):hover{
+.skills-card:nth-child(1):hover {
   border: 2px solid lightslategray;
 }
 
-#main-display{
+#main-display {
   opacity: 1;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
 }
 
-.skills-card:nth-child(2){
+.skills-card:nth-child(2) {
   background-image: url(../images/cppLogo.png);
   background-color: #f6f6f6;
   background-size: contain;
@@ -331,70 +331,70 @@ ul{
   background-position: center;
 }
 
-.skills-card:nth-child(3){
+.skills-card:nth-child(3) {
   background-image: url(../images/pythonLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(4){
+.skills-card:nth-child(4) {
   background-image: url(../images/javaLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(5){
+.skills-card:nth-child(5) {
   background-image: url(../images/htmlLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(6){
+.skills-card:nth-child(6) {
   background-image: url(../images/cssLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(7){
+.skills-card:nth-child(7) {
   background-image: url(../images/jsLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(8){
+.skills-card:nth-child(8) {
   background-image: url(../images/gitLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(9){
+.skills-card:nth-child(9) {
   background-image: url(../images/bashLogo.jpg);
   background-color: #f6f6f6;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(10){
+.skills-card:nth-child(10) {
   background-image: url(../images/matlabLogo.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(11){
+.skills-card:nth-child(11) {
   background-image: url(../images/gcpLogo.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.skills-card:nth-child(12){
+.skills-card:nth-child(12) {
   background-image: url(../images/sqlLogo.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.skills-card:nth-child(13){
+.skills-card:nth-child(13) {
   background-image: url(../images/officeLogo.png);
   background-size: contain;
   background-repeat: no-repeat;

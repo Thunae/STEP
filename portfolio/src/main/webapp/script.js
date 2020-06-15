@@ -72,9 +72,12 @@ function createListElement(comment) {
     .then((response) => response.text())
     .then((data) => {
       liElement.innerHTML = data;
-      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
+      liElement.getElementsByClassName("comment-words")[0].innerText =
+        comment.content;
       //Add funcitonality to the delete button
-      deleteButtonElement = liElement.getElementsByClassName("comment-delete")[0];
+      deleteButtonElement = liElement.getElementsByClassName(
+        "comment-delete"
+      )[0];
       deleteButtonElement.addEventListener("click", () => {
         deleteComment(comment);
 
@@ -104,20 +107,34 @@ function deleteComment(comment) {
   );
 }
 
-
-function findSkill(num){
-  let skills = ['skills/cpp-skill.html','skills/py-skill.html', 'skills/java-skill.html','skills/html-skill.html',
-  'skills/css-skill.html','skills/js-skill.html','skills/git-skill.html','skills/bash-skill.html','skills/matlab-skill.html',
-  'skills/gcp-skill.html','skills/sql-skill.html','skills/office-skill.html'];
+function findSkill(num) {
+  let skills = [
+    "skills/cpp-skill.html",
+    "skills/py-skill.html",
+    "skills/java-skill.html",
+    "skills/html-skill.html",
+    "skills/css-skill.html",
+    "skills/js-skill.html",
+    "skills/git-skill.html",
+    "skills/bash-skill.html",
+    "skills/matlab-skill.html",
+    "skills/gcp-skill.html",
+    "skills/sql-skill.html",
+    "skills/office-skill.html",
+  ];
   displaySkill(skills[num]);
 }
 
-function displaySkill(path){
-  fetch(path).then(response => response.text()).then((data) => {
-    container = document.getElementById("main-display");
-    container.style.opacity = 0;
-    console.log(data);
-    setTimeout(()=>{container.innerHTML = data;}, 500);
-    container.style.opacity = 1;
-  });
+function displaySkill(path) {
+  fetch(path)
+    .then((response) => response.text())
+    .then((data) => {
+      container = document.getElementById("main-display");
+      container.style.opacity = 0;
+      console.log(data);
+      setTimeout(() => {
+        container.innerHTML = data;
+      }, 500);
+      container.style.opacity = 1;
+    });
 }
