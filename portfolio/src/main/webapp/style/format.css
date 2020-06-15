@@ -344,6 +344,7 @@ a {
 .comment-user {
   font-size: 16px;
   padding: 4px;
+  flex: 2;
   margin: 1px 1px;
 }
 
@@ -355,29 +356,40 @@ a {
   text-align: center;
   margin: 1px 1px;
 }
+
 .comment-header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  text-align: center;
+}
+
+.tag{
+    flex: 1;
+    font-size: 12px;
+    background-color: #d3d3d3;
+    border-radius: 2px;
 }
 
 .comment-buttons {
   display: flex;
-  flex-direction: column;
-  padding: 2px;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 4px;
 }
 
 .comment-delete {
   padding: 4px;
   display: flex;
+  border-radius: 2px;
+  text-align: center;
 }
 
 .comment-edit {
   padding: 4px;
   display: flex;
+  border-radius: 2px;
   width: auto;
+  text-align: center;
 }
 
 .comment-content {

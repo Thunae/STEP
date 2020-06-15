@@ -81,8 +81,10 @@ function createListElement(comment) {
         // Remove the comment from the DOM.
         liElement.remove();
       });
+      console.log(comment.tag);
       liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
       liElement.getElementsByClassName("comment-user")[0].innerText = comment.user;
+      liElement.getElementsByClassName("tag")[0].innerText = comment.tag;
     });
 
   return liElement;
