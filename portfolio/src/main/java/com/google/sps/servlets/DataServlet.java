@@ -58,11 +58,12 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(commentAmount))) {
       String content = (String) entity.getProperty("content");
       String date = (String) entity.getProperty("date");
+      String tag = (String) entity.getProperty("tags");
       String user = (String) entity.getProperty("user");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment comment = new Comment(content, timestamp, id, date, user);
+      Comment comment = new Comment(content, timestamp, id, date, user, tag);
       comments.add(comment);
     }
 
@@ -84,15 +85,15 @@ public class DataServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
 
     LanguageTextClassificationPredict predictor = new LanguageTextClassificationPredict();
-    predictor.predict(newComment);
-    
-    
+    List<String> classifications = predictor.predict(newComment);
+
     //Make an entity
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", newComment);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("date", formattedDate);
     commentEntity.setProperty("user", user);
+    commentEntity.setProperty("tags", classifications.get(0));
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
