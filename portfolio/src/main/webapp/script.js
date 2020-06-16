@@ -107,7 +107,6 @@ function deleteComment(comment) {
   );
 }
 
-
 function makePath(value) {
   let path = "skills/" + value + "-skill.html";
   console.log(path);
