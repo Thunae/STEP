@@ -323,7 +323,7 @@ ul {
   transition: opacity 0.5s;
 }
 
-.skills-card:nth-child(2) {
+#cpp-skill {
   background-image: url(../images/cppLogo.png);
   background-color: #f6f6f6;
   background-size: contain;
@@ -331,70 +331,78 @@ ul {
   background-position: center;
 }
 
-.skills-card:nth-child(3) {
+#py-skill {
   background-image: url(../images/pythonLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(4) {
+
+#java-skill {
   background-image: url(../images/javaLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(5) {
+
+#html-skill {
   background-image: url(../images/htmlLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(6) {
+
+#css-skill {
   background-image: url(../images/cssLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(7) {
+
+#js-skill {
   background-image: url(../images/jsLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(8) {
+
+#git-skill {
   background-image: url(../images/gitLogo.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(9) {
+
+#bash-skill {
   background-image: url(../images/bashLogo.jpg);
   background-color: #f6f6f6;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(10) {
+
+#matlab-skil {
   background-image: url(../images/matlabLogo.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.skills-card:nth-child(11) {
+
+#gcp-skill {
   background-image: url(../images/gcpLogo.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.skills-card:nth-child(12) {
+#sql-skill {
   background-image: url(../images/sqlLogo.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.skills-card:nth-child(13) {
+#office-skill {
   background-image: url(../images/officeLogo.png);
   background-size: contain;
   background-repeat: no-repeat;

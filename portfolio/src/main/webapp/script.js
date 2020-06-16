@@ -107,22 +107,11 @@ function deleteComment(comment) {
   );
 }
 
-function findSkill(num) {
-  let skills = [
-    "skills/cpp-skill.html",
-    "skills/py-skill.html",
-    "skills/java-skill.html",
-    "skills/html-skill.html",
-    "skills/css-skill.html",
-    "skills/js-skill.html",
-    "skills/git-skill.html",
-    "skills/bash-skill.html",
-    "skills/matlab-skill.html",
-    "skills/gcp-skill.html",
-    "skills/sql-skill.html",
-    "skills/office-skill.html",
-  ];
-  displaySkill(skills[num]);
+
+function makePath(value) {
+  let path = "skills/" + value + "-skill.html";
+  console.log(path);
+  displaySkill(path);
 }
 
 function displaySkill(path) {
