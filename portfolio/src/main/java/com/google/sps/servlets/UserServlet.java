@@ -40,7 +40,6 @@ public class UserServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     String user = userService.getCurrentUser().getEmail();
 
-    System.out.println(user);
     response.setContentType("text/html");
     response.getWriter().println(user);
   }

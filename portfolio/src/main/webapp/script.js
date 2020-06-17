@@ -74,7 +74,7 @@ function createListElement(comment) {
       liElement.innerHTML = data;
       liElement.getElementsByClassName("comment-words")[0].innerText =
         comment.content;
-      //Add funcitonality to the delete button
+      //Add functionality to the delete button
       deleteButtonElement = liElement.getElementsByClassName(
         "comment-delete"
       )[0];
