@@ -1,31 +1,70 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- basic.html -->
     <title>Skills Page</title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style/format.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style/format.css" />
   </head>
   <body class="menu-page page">
-    <div class="skills-background"></div>
+    <div class="skills-background">
+      <div class="skills-card" id="main-display">
+        <h1 class="skill-title">Explore My Skills!</h1>
+        <p class="skill-description">
+          I am a programming enthusiast with experience in a variety of
+          languages. I have complete projects an made products using the tools
+          listed around here. Click each one for more information!
+        </p>
+        <div class="skill-container">
+          <ul>
+            <li>C++</li>
+            <li>Python</li>
+            <li>Java</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+          </ul>
+          <ul>
+            <li>Git</li>
+            <li>Bash</li>
+            <li>Matlab</li>
+            <li>Google Cloud Platform Products</li>
+            <li>SQL</li>
+            <li>Office 365 Suite</li>
+          </ul>
+        </div>
+      </div>
+      <div class="skills-card" onclick="makePath('cpp')" id="cpp-skill"></div>
+      <div class="skills-card" onclick="makePath('py')" id="py-skill"></div>
+      <div class="skills-card" onclick="makePath('java')" id="java-skill"></div>
+      <div class="skills-card" onclick="makePath('html')" id="html-skill"></div>
+      <div class="skills-card" onclick="makePath('css')" id="css-skill"></div>
+      <div class="skills-card" onclick="makePath('js')" id="js-skill"></div>
+      <div class="skills-card" onclick="makePath('git')" id="git-skill"></div>
+      <div class="skills-card" onclick="makePath('bash')" id="bash-skill"></div>
+      <div class="skills-card" onclick="makePath('matlab')" id="matlab-skill"></div>
+      <div class="skills-card" onclick="makePath('gcp')" id="gcp-skill"></div>
+      <div class="skills-card" onclick="makePath('sql')" id="sql-skill"></div>
+      <div class="skills-card" onclick="makePath('office')" id="office-skill"></div>
+    </div>
     <script src="script.js"></script>
   </body>
   <footer>
     <div class="footer">
       <div class="footer-icons">
         <a href="#">
-        <img src="../images/github.png" class="icon" alt="Github Logo">
+          <img src="images/github.png" class="icon" alt="Github Logo" />
         </a>
         <a href="#">
-        <img src="../images/facebook.png" class="icon" alt="Facebook Logo">
+          <img src="images/facebook.png" class="icon" alt="Facebook Logo" />
         </a>
         <a href="#">
-        <img src="../images/instagram.png" class="icon" alt="Instagram Logo">
+          <img src="images/instagram.png" class="icon" alt="Instagram Logo" />
         </a>
         <a href="#">
-        <img src="../images/linkedin.png" class="icon" alt="Linkedin Logo">
+          <img src="images/linkedin.png" class="icon" alt="Linkedin Logo" />
         </a>
       </div>
       <div class="footer-links">

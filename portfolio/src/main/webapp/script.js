@@ -72,9 +72,12 @@ function createListElement(comment) {
     .then((response) => response.text())
     .then((data) => {
       liElement.innerHTML = data;
-      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
+      liElement.getElementsByClassName("comment-words")[0].innerText =
+        comment.content;
       //Add funcitonality to the delete button
-      deleteButtonElement = liElement.getElementsByClassName("comment-delete")[0];
+      deleteButtonElement = liElement.getElementsByClassName(
+        "comment-delete"
+      )[0];
       deleteButtonElement.addEventListener("click", () => {
         deleteComment(comment);
 
@@ -102,6 +105,26 @@ function deleteComment(comment) {
   fetch("/delete-data", { method: "POST", body: params }).then(() =>
     getComments()
   );
+}
+
+function makePath(value) {
+  let path = "skills/" + value + "-skill.html";
+  console.log(path);
+  displaySkill(path);
+}
+
+function displaySkill(path) {
+  fetch(path)
+    .then((response) => response.text())
+    .then((data) => {
+      container = document.getElementById("main-display");
+      container.style.opacity = 0;
+      console.log(data);
+      setTimeout(() => {
+        container.innerHTML = data;
+      }, 500);
+      container.style.opacity = 1;
+    });
 }
 
 function displayLoginStatus(){
