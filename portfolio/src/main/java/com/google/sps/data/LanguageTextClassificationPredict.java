@@ -15,7 +15,7 @@ public class LanguageTextClassificationPredict {
     private String projectId;
     private String modelId;
 
-  public LanguageTextClassificationPredict(){
+  public LanguageTextClassificationPredict() {
     this.projectId = "ryangudal-step";
     this.modelId = "TCN4253511309586333696";
   }

@@ -72,16 +72,12 @@ function createListElement(comment) {
     .then((response) => response.text())
     .then((data) => {
       liElement.innerHTML = data;
-      liElement.getElementsByClassName("comment-words")[0].innerText =
-        comment.content;
-      //Add functionality to the delete button
+      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
       deleteButtonElement = liElement.getElementsByClassName(
         "comment-delete"
       )[0];
       deleteButtonElement.addEventListener("click", () => {
         deleteComment(comment);
-
-        // Remove the comment from the DOM.
         liElement.remove();
       });
 
@@ -126,13 +122,13 @@ function displayLoginStatus() {
       if (loginStatus.loggedIn) {
         document.getElementById("new-comment").style.visibility = "visible";
         document.getElementById("login-button").style.visibility = "hidden";
-        var logoutButton = document.getElementById("logout-button");
+        let logoutButton = document.getElementById("logout-button");
         logoutButton.href = loginStatus.url;
         logoutButton.style.visibility = "visible";
       } else {
         document.getElementById("new-comment").style.visibility = "hidden";
         document.getElementById("logout-button").style.visibility = "hidden";
-        var loginButton = document.getElementById("login-button");
+        let loginButton = document.getElementById("login-button");
         loginButton.style.visibility = "visible";
         loginButton.href = loginStatus.url;
       }
