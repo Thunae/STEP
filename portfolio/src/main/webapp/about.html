@@ -7,9 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style/format.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLFW4By8Q8bHSAVIp1LS5r0D_dD8_Ghlg"></script>
+    <script src="script.js"></script>
   </head>
-  <body class="menu-page page">
-    <div class="about-background"></div>
+  <body class="menu-page page" onload="createMap();">
+    <div class="about-background">
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+        <div id="about-description">
+            <div class="about-header">
+                <h1>About Me</h1>
+            </div>
+            <div class="about-body">
+                <p class="about-me">I'm a Computer Science student at the University of Michigan. I have a love for technology and a
+                    passion for problem-solving. My experience is with web development and web based applications, but
+                    I am interested in any new and unique technology!
+                </p>
+            </div>
+            <div class="about-under"></div>
+        </div>
+        <div id="about-pictures"></div>
+    </div>
     <script src="script.js"></script>
   </body>
   <footer>

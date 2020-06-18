@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Comment;
+import com.google.sps.data.LanguageTextClassificationPredict;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import com.google.gson.Gson;
@@ -32,8 +33,9 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 import java.text.SimpleDateFormat;  
 import java.util.Date; 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments")
 public class DataServlet extends HttpServlet {
 
@@ -56,10 +58,11 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(commentAmount))) {
       String content = (String) entity.getProperty("content");
       String date = (String) entity.getProperty("date");
+      String user = (String) entity.getProperty("user");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment comment = new Comment(content, timestamp, id, date);
+      Comment comment = new Comment(content, timestamp, id, date, user);
       comments.add(comment);
     }
 
@@ -76,6 +79,12 @@ public class DataServlet extends HttpServlet {
     SimpleDateFormat formatter = new SimpleDateFormat("MMM d, 'at' HH:mm");
     Date date = new Date(System.currentTimeMillis());
     String formattedDate = formatter.format(date);
+
+    UserService userService = UserServiceFactory.getUserService();
+    String user = userService.getCurrentUser().getEmail();
+
+    LanguageTextClassificationPredict predictor = new LanguageTextClassificationPredict();
+    predictor.predict(newComment);
     
     
     //Make an entity
@@ -83,6 +92,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("content", newComment);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("date", formattedDate);
+    commentEntity.setProperty("user", user);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);

@@ -412,6 +412,10 @@ ul {
 .about-background {
   background-color: #4285f4;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  justify-content: space-between;
 }
 
 .work-background {
@@ -487,7 +491,7 @@ ul {
 .comment-user {
   font-size: 16px;
   padding: 4px;
-  margin: 1px 1px;
+  margin: 1px 2px;
 }
 
 .comment-date {
@@ -539,4 +543,58 @@ ul {
 
 .clear {
   clear: both;
+}
+
+#map-container {
+  background-color: transparent;
+  display: flex;
+  flex: 1.5;
+  align-items: center;
+}
+
+#map {
+  height: 50vh;
+  width: 35vw;
+}
+
+#about-description {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: black;
+  margin: 5px 5px;
+}
+
+#about-pictures {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: black;
+}
+
+.about-header {
+  border-bottom: 3px solid black;
+  display: flex;
+  align-items: center;
+  font-size: 45px;
+  flex: 1;
+  text-align: center;
+  margin: 10px 10px;
+}
+
+.about-body {
+  border-bottom: 3px solid black;
+  flex: 2;
+}
+
+.about-me {
+  font-size: 25px;
+  text-align: center;
+  margin: 10px 10px;
+}
+
+.about-under {
+  flex: 2;
 }
