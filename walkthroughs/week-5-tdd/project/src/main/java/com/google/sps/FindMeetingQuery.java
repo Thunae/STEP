@@ -19,25 +19,41 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
+import java.util.Arrays;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+      Collection<Event> eventsAL = new ArrayList<Event>(events);
       Collection<String> people = request.getAttendees();
+
       Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
       availableTimes.add(TimeRange.WHOLE_DAY);
-      for(Event event : events){
-          if(!Collections.disjoint(event.getAttendees(), people)){
-            createBookedRange(availableTimes, event.getWhen());
-          }
+      getAvailableTimes(eventsAL, people, availableTimes, request.getDuration());
+    
+      Collection<TimeRange> availableTimesOptional = new ArrayList<TimeRange>(availableTimes);
+      Collection<String> optionalPeople = request.getOptionalAttendees();
+      getAvailableTimes(eventsAL, optionalPeople, availableTimesOptional, request.getDuration());
+
+      if(request.getAttendees().isEmpty() && availableTimesOptional.isEmpty()){
+          return Arrays.asList();
       }
 
-      availableTimes.removeIf(item -> (item.duration() < request.getDuration()));
-
-      return availableTimes;
+      return availableTimesOptional.isEmpty() ? availableTimes : availableTimesOptional;
   }
 
-  private void createBookedRange(Collection<TimeRange> availableTimes, TimeRange newEvent){
-      for(TimeRange event : availableTimes){
+  private void getAvailableTimes(Collection<Event> events, Collection<String> people, Collection<TimeRange> availableTimes, long duration){
+      for(Event event : new ArrayList<Event>(events)){
+          if(!Collections.disjoint(event.getAttendees(), people)){
+            createAvailableRange(availableTimes, event.getWhen());
+            events.remove(event);
+          }
+      }
+      availableTimes.removeIf(item -> (item.duration() < duration));
+      return;
+  }
+
+  private void createAvailableRange(Collection<TimeRange> availableTimes, TimeRange newEvent){
+      for(TimeRange event : new ArrayList<TimeRange>(availableTimes)){
           if(event.contains(newEvent)){
               availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
               availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
