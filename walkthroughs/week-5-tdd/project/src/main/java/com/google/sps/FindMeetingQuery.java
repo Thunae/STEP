@@ -15,9 +15,49 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+      Collection<String> people = request.getAttendees();
+      Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
+      availableTimes.add(TimeRange.WHOLE_DAY);
+      for(Event event : events){
+          if(!Collections.disjoint(event.getAttendees(), people)){
+            createBookedRange(availableTimes, event.getWhen());
+          }
+      }
+
+      availableTimes.removeIf(item -> (item.duration() < request.getDuration()));
+
+      return availableTimes;
+  }
+
+  private void createBookedRange(Collection<TimeRange> availableTimes, TimeRange newEvent){
+      for(TimeRange event : availableTimes){
+          if(event.contains(newEvent)){
+              availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
+              availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
+              availableTimes.remove(event);
+              return;
+        } else if(event.equals(newEvent)){
+            availableTimes.remove(event);
+            return;
+        }  else if(newEvent.contains(event)){
+            availableTimes.remove(event);
+        } else if(event.overlaps(newEvent)){
+            if(event.start() < newEvent.end()){
+                availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
+                availableTimes.remove(event);
+            } else if(newEvent.start() > event.end()){
+                availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
+                availableTimes.remove(event);
+            }
+        }
+      }
+      return;
   }
 }
