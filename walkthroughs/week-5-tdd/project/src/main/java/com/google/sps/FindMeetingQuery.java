@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -42,10 +43,12 @@ public final class FindMeetingQuery {
   }
 
   private void getAvailableTimes(Collection<Event> events, Collection<String> people, Collection<TimeRange> availableTimes, long duration){
-      for(Event event : new ArrayList<Event>(events)){
-          if(!Collections.disjoint(event.getAttendees(), people)){
-            createAvailableRange(availableTimes, event.getWhen());
-            events.remove(event);
+      Iterator<Event> it = events.iterator();
+      while(it.hasNext()){
+          Event element = it.next();
+          if(!Collections.disjoint(element.getAttendees(), people)){
+            createAvailableRange(availableTimes, element.getWhen());
+            it.remove();
           }
       }
       availableTimes.removeIf(item -> (item.duration() < duration));
@@ -53,27 +56,29 @@ public final class FindMeetingQuery {
   }
 
   private void createAvailableRange(Collection<TimeRange> availableTimes, TimeRange newEvent){
-      for(TimeRange event : new ArrayList<TimeRange>(availableTimes)){
-          if(event.contains(newEvent)){
-              availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
-              availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
-              availableTimes.remove(event);
-              return;
+      List<TimeRange> deleteList = new ArrayList<TimeRange>();
+      for(TimeRange event : availableTimes){
+        if(event.contains(newEvent)){
+            deleteList.add(event);
+            availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
+            availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
+            break;
         } else if(event.equals(newEvent)){
-            availableTimes.remove(event);
-            return;
+            deleteList.add(event);
+            break;
         }  else if(newEvent.contains(event)){
-            availableTimes.remove(event);
+            deleteList.add(event);
         } else if(event.overlaps(newEvent)){
             if(event.start() < newEvent.end()){
+                deleteList.add(event);
                 availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
-                availableTimes.remove(event);
-            } else if(newEvent.start() > event.end()){
+            } else if(newEvent.start() < event.end()){
+                deleteList.add(event);
                 availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
-                availableTimes.remove(event);
             }
         }
       }
+      availableTimes.removeAll(deleteList);
       return;
   }
 }
