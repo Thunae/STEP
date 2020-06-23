@@ -24,58 +24,40 @@ import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query (Collection<Event> events, MeetingRequest request) {
-      Collection<Event> eventsAL = new ArrayList<Event>(events);
       Collection<String> people = request.getAttendees();
-
       Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
-      availableTimes.add(TimeRange.WHOLE_DAY);
-      getAvailableTimes(eventsAL, people, availableTimes, request.getDuration());
-    
-      Collection<TimeRange> availableTimesOptional = new ArrayList<TimeRange>(availableTimes);
-      Collection<String> optionalPeople = request.getOptionalAttendees();
-      getAvailableTimes(eventsAL, optionalPeople, availableTimesOptional, request.getDuration());
 
-      if(request.getAttendees().isEmpty() && availableTimesOptional.isEmpty()){
-          return Arrays.asList();
-      }
+      ArrayList<TimeRange> bookedTimes = new ArrayList<TimeRange>();
+      getbookedTimes(events, people, bookedTimes);
+      Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
+      createAvailableRange(bookedTimes, availableTimes, request.getDuration());
 
-      return availableTimesOptional.isEmpty() ? availableTimes : availableTimesOptional;
+      
+      return availableTimes;
   }
 
-  private void getAvailableTimes (Collection<Event> events, Collection<String> people, Collection<TimeRange> availableTimes, long duration) {
-      Iterator<Event> it = events.iterator();
-      while(it.hasNext()){
-          Event element = it.next();
-          if(!Collections.disjoint(element.getAttendees(), people)){
-            createAvailableRange(availableTimes, element.getWhen());
-            it.remove();
+  private void getbookedTimes (Collection<Event> events, Collection<String> people, ArrayList<TimeRange> bookedTimes) {
+      for(Event event: events){
+          if(!Collections.disjoint(event.getAttendees(), people)){
+            bookedTimes.add(event.getWhen());
           }
       }
-      availableTimes.removeIf(item -> (item.duration() < duration));
-      return;
   }
 
-  private void createAvailableRange (Collection<TimeRange> availableTimes, TimeRange newEvent) {
-      for(TimeRange event : new ArrayList<TimeRange>(availableTimes)){
-        if(event.contains(newEvent)){
-            availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
-            availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
-            availableTimes.remove(event);
-            return;
-        } else if(event.equals(newEvent)){
-            availableTimes.remove(event);
-            return;
-        }  else if(newEvent.contains(event)){
-            availableTimes.remove(event);
-        } else if(event.overlaps(newEvent)){
-            if(event.start() < newEvent.end()){
-                availableTimes.add(TimeRange.fromStartEnd(newEvent.end(), event.end(), false));
-                availableTimes.remove(event);
-            } else if(newEvent.start() < event.end()){
-                availableTimes.add(TimeRange.fromStartEnd(event.start(), newEvent.start(), false));
-                availableTimes.remove(event);
-            }
-        }
+  private void createAvailableRange (ArrayList<TimeRange> bookedTimes, Collection<TimeRange> availableTimes, long duration) {
+      int nextSlot = TimeRange.START_OF_DAY;
+      for(TimeRange filled : bookedTimes){
+          if(filled.start() - nextSlot >= duration){
+              availableTimes.add(TimeRange.fromStartEnd(nextSlot, filled.start(), false));
+          }
+
+          if(filled.end() > nextSlot){
+            nextSlot = filled.end();
+          }
+      }
+
+      if(TimeRange.END_OF_DAY - nextSlot >= duration){
+          availableTimes.add(TimeRange.fromStartEnd(nextSlot, TimeRange.END_OF_DAY, true));
       }
       return;
   }
