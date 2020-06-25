@@ -30,9 +30,7 @@ public final class FindMeetingQuery {
       Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
       Collection<TimeRange> availableTimes = createAvailableRange(bookedTimes, request.getDuration());
       
-
-      ArrayList<TimeRange> optionalBookedTimes = getbookedTimes(events, request.getOptionalAttendees());
-      bookedTimes.addAll(optionalBookedTimes);
+      bookedTimes.addAll(getbookedTimes(events, request.getOptionalAttendees());
       Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
       Collection<TimeRange> optionalAvailableTimes = createAvailableRange(bookedTimes, request.getDuration());
       
@@ -66,9 +64,5 @@ public final class FindMeetingQuery {
           availableTimes.add(TimeRange.fromStartEnd(nextSlot, TimeRange.END_OF_DAY, true));
       }
       return availableTimes;
-  }
-
-  private Collection<TimeRange> maximizeOptionalAttendees(ArrayList<TimeRange> bookedTimes, long duration){
-
   }
 }
