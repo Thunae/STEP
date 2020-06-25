@@ -30,10 +30,16 @@ public final class FindMeetingQuery {
       Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
       Collection<TimeRange> availableTimes = createAvailableRange(bookedTimes, request.getDuration());
       
-      bookedTimes.addAll(getbookedTimes(events, request.getOptionalAttendees());
+      bookedTimes.addAll(getbookedTimes(events, request.getOptionalAttendees()));
       Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
       Collection<TimeRange> optionalAvailableTimes = createAvailableRange(bookedTimes, request.getDuration());
-      
+
+      ArrayList<String> requiredPeople = new ArrayList<String>(request.getAttendees());
+      ArrayList<String> optionalPeople = new ArrayList<String>(request.getOptionalAttendees());
+
+      int answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, events, request.getDuration());
+      System.out.println(answer);
+
       return optionalAvailableTimes.isEmpty() ? availableTimes : optionalAvailableTimes;
   }
 
@@ -64,5 +70,25 @@ public final class FindMeetingQuery {
           availableTimes.add(TimeRange.fromStartEnd(nextSlot, TimeRange.END_OF_DAY, true));
       }
       return availableTimes;
+  }
+
+  private int numberOfAttendees(ArrayList<String> people, Collection<Event> events, long duration){
+      ArrayList<TimeRange> bookedTime = getbookedTimes(events, people);
+      Collection<TimeRange> availableRange = createAvailableRange(bookedTime, duration);
+      return availableRange.isEmpty() ? 0 : availableRange.size();
+  }
+
+  private int maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, Collection<Event> events, long duration){
+    if(optionalPeople.size()==0){
+        return 0;
+    }
+    requiredPeople.addAll(optionalPeople);
+    if(numberOfAttendees(requiredPeople, events, duration) == 0){
+        requiredPeople.removeAll(optionalPeople);
+        return maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration);
+    }
+    else{
+        return Math.max(numberOfAttendees(requiredPeople, events, duration), maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration));
+    }
   }
 }
