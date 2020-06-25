@@ -23,42 +23,52 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query (Collection<Event> events, MeetingRequest request) {
+  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
       Collection<String> people = request.getAttendees();
-      Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
 
-      ArrayList<TimeRange> bookedTimes = new ArrayList<TimeRange>();
-      getbookedTimes(events, people, bookedTimes);
+      ArrayList<TimeRange> bookedTimes = getbookedTimes(events, people);
       Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
-      createAvailableRange(bookedTimes, availableTimes, request.getDuration());
-
+      Collection<TimeRange> availableTimes = createAvailableRange(bookedTimes, request.getDuration());
       
-      return availableTimes;
+
+      ArrayList<TimeRange> optionalBookedTimes = getbookedTimes(events, request.getOptionalAttendees());
+      bookedTimes.addAll(optionalBookedTimes);
+      Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
+      Collection<TimeRange> optionalAvailableTimes = createAvailableRange(bookedTimes, request.getDuration());
+      
+      return optionalAvailableTimes.isEmpty() ? availableTimes : optionalAvailableTimes;
   }
 
-  private void getbookedTimes (Collection<Event> events, Collection<String> people, ArrayList<TimeRange> bookedTimes) {
-      for(Event event: events){
+  private ArrayList<TimeRange> getbookedTimes(Collection<Event> events, Collection<String> people) {
+      ArrayList<TimeRange> bookedTimes = new ArrayList<>();
+      for(Event event: events) {
           if(!Collections.disjoint(event.getAttendees(), people)){
             bookedTimes.add(event.getWhen());
           }
       }
+      return bookedTimes;
   }
 
-  private void createAvailableRange (ArrayList<TimeRange> bookedTimes, Collection<TimeRange> availableTimes, long duration) {
+  private Collection<TimeRange> createAvailableRange(ArrayList<TimeRange> bookedTimes, long duration) {
+      Collection<TimeRange> availableTimes = new ArrayList<>();
       int nextSlot = TimeRange.START_OF_DAY;
-      for(TimeRange filled : bookedTimes){
-          if(filled.start() - nextSlot >= duration){
+      for(TimeRange filled : bookedTimes) {
+          if(filled.start() - nextSlot >= duration) {
               availableTimes.add(TimeRange.fromStartEnd(nextSlot, filled.start(), false));
           }
 
-          if(filled.end() > nextSlot){
+          if(filled.end() > nextSlot) {
             nextSlot = filled.end();
           }
       }
 
-      if(TimeRange.END_OF_DAY - nextSlot >= duration){
+      if(TimeRange.END_OF_DAY - nextSlot >= duration) {
           availableTimes.add(TimeRange.fromStartEnd(nextSlot, TimeRange.END_OF_DAY, true));
       }
-      return;
+      return availableTimes;
+  }
+
+  private Collection<TimeRange> maximizeOptionalAttendees(ArrayList<TimeRange> bookedTimes, long duration){
+
   }
 }
