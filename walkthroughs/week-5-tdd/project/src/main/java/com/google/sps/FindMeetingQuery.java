@@ -25,22 +25,10 @@ import com.google.sps.Pair;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-      Collection<String> people = request.getAttendees();
-
-      ArrayList<TimeRange> bookedTimes = getbookedTimes(events, people);
-      Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
-      Collection<TimeRange> availableTimes = createAvailableRange(bookedTimes, request.getDuration());
-      
-      bookedTimes.addAll(getbookedTimes(events, request.getOptionalAttendees()));
-      Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
-      Collection<TimeRange> optionalAvailableTimes = createAvailableRange(bookedTimes, request.getDuration());
-
       ArrayList<String> requiredPeople = new ArrayList<String>(request.getAttendees());
       ArrayList<String> optionalPeople = new ArrayList<String>(request.getOptionalAttendees());
 
       Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, events, request.getDuration()).getValue1();
-
-      //return optionalAvailableTimes.isEmpty() ? availableTimes : optionalAvailableTimes;
       return answer;
   }
 
@@ -78,9 +66,6 @@ public final class FindMeetingQuery {
       ArrayList<TimeRange> bookedTime = getbookedTimes(events, people);
       Collection<TimeRange> availableRange = createAvailableRange(bookedTime, duration);
       Pair pair = new Pair(people.size(), availableRange);
-      System.out.print(availableRange);
-      System.out.print(":  with ");
-      System.out.println(people.size());
       return availableRange.isEmpty() ? new Pair(0, new ArrayList<TimeRange>()) : pair;
   }
 
@@ -90,7 +75,7 @@ public final class FindMeetingQuery {
     }
     ArrayList<String> temp2 = new ArrayList<String>(requiredPeople);
     temp2.add(optionalPeople.get(optionalPeople.size()-1));
-    if(maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0() > maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0())
+    if(maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0() >= maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0())
         return maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration);
     else    
         return maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration);
