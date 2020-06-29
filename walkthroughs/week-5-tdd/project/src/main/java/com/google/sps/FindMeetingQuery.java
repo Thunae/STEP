@@ -111,4 +111,6 @@ public final class FindMeetingQuery {
   public String stringify(ArrayList<String> array){
       return array.stream().collect(Collectors.joining(" "));
   }
+
+  
 }
