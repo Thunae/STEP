@@ -24,6 +24,7 @@ import java.util.Iterator;
 import com.google.sps.Pair;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -31,7 +32,7 @@ public final class FindMeetingQuery {
       ArrayList<String> optionalPeople = new ArrayList<String>(request.getOptionalAttendees());
       Map<ArrayList<String>, SchedulingResult> history = new HashMap<>();
 
-      Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, events, request.getDuration(), history).schedule;
+      Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, optionalPeople.size()-1, events, request.getDuration(), history).schedule;
       return answer;
   }
 
@@ -72,9 +73,8 @@ public final class FindMeetingQuery {
       return availableRange.isEmpty() ? new SchedulingResult(0, new ArrayList<TimeRange>()) : result;
   }
 
-  private SchedulingResult maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, Collection<Event> events, long duration, Map<ArrayList<String>, SchedulingResult> history){
-    
-    if(optionalPeople.size()==0){
+  private SchedulingResult maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, int n, Collection<Event> events, long duration, Map<ArrayList<String>, SchedulingResult> history){
+    if(n<0){
         history.put(requiredPeople, numberOfAttendees(requiredPeople, events, duration));
         return history.get(requiredPeople);
     }
@@ -84,9 +84,10 @@ public final class FindMeetingQuery {
     }
     else{
         ArrayList<String> temp2 = new ArrayList<String>(requiredPeople);
-        temp2.add(optionalPeople.get(optionalPeople.size()-1));
-        history.put(requiredPeople, comparison(maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration, history), maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration, history)));
-        return history.get(requiredPeople); 
+        temp2.add(optionalPeople.get(n));
+        history.put(requiredPeople, maximizeOptionalAttendees(requiredPeople, optionalPeople, n-1, events, duration, history));
+        history.put(temp2, maximizeOptionalAttendees(temp2, optionalPeople, n-1, events, duration, history));
+        return comparison(history.get(requiredPeople), history.get(temp2)) ? history.get(requiredPeople) : history.get(temp2); 
     }
   }
 
@@ -100,7 +101,7 @@ public final class FindMeetingQuery {
       }
   }
 
-  public SchedulingResult comparison(SchedulingResult left, SchedulingResult right){
-      return left.numOfPeople >= right.numOfPeople ? left : right;
+  public Boolean comparison(SchedulingResult left, SchedulingResult right){
+      return left.numOfPeople > right.numOfPeople;
   }
 }
