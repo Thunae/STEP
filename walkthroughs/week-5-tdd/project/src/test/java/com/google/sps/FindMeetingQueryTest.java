@@ -361,7 +361,7 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_B);
 
     Collection<TimeRange> actual = query.query(events, request);
-    Collection<TimeRange> expected = Arrays.asList();
+    Collection<TimeRange> expected = Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false));
 
     Assert.assertEquals(expected, actual);
   }
@@ -442,6 +442,35 @@ public final class FindMeetingQueryTest {
     System.out.println("Max 3");
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected = Arrays.asList(TimeRange.fromStartEnd(TIME_0800AM, TIME_1100AM, false));
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void maximizeOptionalAttendeesComplex() {
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_B, PERSON_D)),
+        new Event("Event 3", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_C)),
+        new Event("Event 4", TimeRange.fromStartEnd(TIME_0830AM, TIME_1100AM, false),
+            Arrays.asList(PERSON_E)),
+        new Event("Event 5", TimeRange.fromStartEnd(TIME_0800AM, TIME_0900AM, false),
+            Arrays.asList(PERSON_B)),
+        new Event("Event 6", TimeRange.fromStartEnd(TIME_0830AM, TIME_0930AM, false),
+            Arrays.asList(PERSON_D))            
+        );
+    MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), DURATION_60_MINUTES);
+    request.addOptionalAttendee(PERSON_B);
+    request.addOptionalAttendee(PERSON_C);
+    request.addOptionalAttendee(PERSON_D);
+    request.addOptionalAttendee(PERSON_E);
+    System.out.println("Max 3");
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected = Arrays.asList(TimeRange.fromStartEnd(TIME_0930AM, TIME_1100AM, false));
 
     Assert.assertEquals(expected, actual);
   }

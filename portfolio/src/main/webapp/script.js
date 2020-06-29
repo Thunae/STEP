@@ -175,3 +175,4 @@ function getCurrentUser() {
     });
   return user;
 }
+

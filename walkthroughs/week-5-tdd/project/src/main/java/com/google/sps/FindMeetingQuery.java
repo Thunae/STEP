@@ -22,13 +22,16 @@ import java.util.Comparator;
 import java.util.Arrays;
 import java.util.Iterator;
 import com.google.sps.Pair;
+import java.util.Map;
+import java.util.HashMap;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
       ArrayList<String> requiredPeople = new ArrayList<String>(request.getAttendees());
       ArrayList<String> optionalPeople = new ArrayList<String>(request.getOptionalAttendees());
+      Map<ArrayList<String>, SchedulingResult> history = new HashMap<>();
 
-      Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, events, request.getDuration()).getValue1();
+      Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, events, request.getDuration(), history).schedule;
       return answer;
   }
 
@@ -62,22 +65,42 @@ public final class FindMeetingQuery {
       return availableTimes;
   }
 
-  private Pair numberOfAttendees(ArrayList<String> people, Collection<Event> events, long duration){
+  private SchedulingResult numberOfAttendees(ArrayList<String> people, Collection<Event> events, long duration){
       ArrayList<TimeRange> bookedTime = getbookedTimes(events, people);
       Collection<TimeRange> availableRange = createAvailableRange(bookedTime, duration);
-      Pair pair = new Pair(people.size(), availableRange);
-      return availableRange.isEmpty() ? new Pair(0, new ArrayList<TimeRange>()) : pair;
+      SchedulingResult result = new SchedulingResult(people.size(), availableRange);
+      return availableRange.isEmpty() ? new SchedulingResult(0, new ArrayList<TimeRange>()) : result;
   }
 
-  private Pair maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, Collection<Event> events, long duration){
+  private SchedulingResult maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, Collection<Event> events, long duration, Map<ArrayList<String>, SchedulingResult> history){
+    
     if(optionalPeople.size()==0){
-        return numberOfAttendees(requiredPeople, events, duration);
+        history.put(requiredPeople, numberOfAttendees(requiredPeople, events, duration));
+        return history.get(requiredPeople);
     }
-    ArrayList<String> temp2 = new ArrayList<String>(requiredPeople);
-    temp2.add(optionalPeople.get(optionalPeople.size()-1));
-    if(maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0() >= maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration).getValue0())
-        return maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration);
-    else    
-        return maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration);
+
+    if(history.containsKey(requiredPeople)){
+        return history.get(requiredPeople);
+    }
+    else{
+        ArrayList<String> temp2 = new ArrayList<String>(requiredPeople);
+        temp2.add(optionalPeople.get(optionalPeople.size()-1));
+        history.put(requiredPeople, comparison(maximizeOptionalAttendees(temp2, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration, history), maximizeOptionalAttendees(requiredPeople, new ArrayList<String>(optionalPeople.subList(0, optionalPeople.size()-1)), events, duration, history)));
+        return history.get(requiredPeople); 
+    }
+  }
+
+  private class SchedulingResult{
+      public Integer numOfPeople;
+      public Collection<TimeRange> schedule;
+
+      public SchedulingResult(int num, Collection<TimeRange> schedule){
+          this.numOfPeople = num;
+          this.schedule = schedule;
+      }
+  }
+
+  public SchedulingResult comparison(SchedulingResult left, SchedulingResult right){
+      return left.numOfPeople >= right.numOfPeople ? left : right;
   }
 }
