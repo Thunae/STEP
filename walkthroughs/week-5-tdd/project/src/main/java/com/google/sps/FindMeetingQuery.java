@@ -15,9 +15,102 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Iterator;
+import com.google.sps.Pair;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+      ArrayList<String> requiredPeople = new ArrayList<String>(request.getAttendees());
+      ArrayList<String> optionalPeople = new ArrayList<String>(request.getOptionalAttendees());
+      Map<String, SchedulingResult> history = new HashMap<>();
+
+      Collection<TimeRange> answer = maximizeOptionalAttendees(requiredPeople, optionalPeople, optionalPeople.size()-1, events, request.getDuration(), history).schedule;
+      return answer;
   }
+
+  private ArrayList<TimeRange> getbookedTimes(Collection<Event> events, Collection<String> people) {
+      ArrayList<TimeRange> bookedTimes = new ArrayList<>();
+      for(Event event: events) {
+          if(!Collections.disjoint(event.getAttendees(), people)){
+            bookedTimes.add(event.getWhen());
+          }
+      }
+      return bookedTimes;
+  }
+
+  private Collection<TimeRange> createAvailableRange(ArrayList<TimeRange> bookedTimes, long duration) {
+    Collection<TimeRange> availableTimes = new ArrayList<>();
+    Collections.sort(bookedTimes, TimeRange.ORDER_BY_START);
+    int nextSlot = TimeRange.START_OF_DAY;
+    for(TimeRange filled : bookedTimes) {
+        if(filled.start() - nextSlot >= duration) {
+            availableTimes.add(TimeRange.fromStartEnd(nextSlot, filled.start(), false));
+        }
+
+        if(filled.end() > nextSlot) {
+            nextSlot = filled.end();
+        }
+    }
+
+    if(TimeRange.END_OF_DAY - nextSlot >= duration) {
+        availableTimes.add(TimeRange.fromStartEnd(nextSlot, TimeRange.END_OF_DAY, true));
+    }
+    return availableTimes;
+  }
+
+  private SchedulingResult numberOfAttendees(ArrayList<String> people, Collection<Event> events, long duration){
+      ArrayList<TimeRange> bookedTime = getbookedTimes(events, people);
+      Collection<TimeRange> availableRange = createAvailableRange(bookedTime, duration);
+      SchedulingResult result = new SchedulingResult(people.size(), availableRange);
+      return availableRange.isEmpty() ? new SchedulingResult(0, new ArrayList<TimeRange>()) : result;
+  }
+
+  private SchedulingResult maximizeOptionalAttendees(ArrayList<String> requiredPeople, ArrayList<String> optionalPeople, int n, Collection<Event> events, long duration, Map<String, SchedulingResult> history){
+    String mapID = stringify(requiredPeople);
+    if(n < 0){
+        history.put(mapID, numberOfAttendees(requiredPeople, events, duration));
+        return history.get(mapID);
+    }
+
+    if(history.containsKey(mapID)){
+        return history.get(mapID);
+    }
+    else {
+        ArrayList<String> temp2 = new ArrayList<String>(requiredPeople);
+        temp2.add(optionalPeople.get(n));
+        String addedMapID = stringify(temp2);
+        history.put(mapID, maximizeOptionalAttendees(requiredPeople, optionalPeople, n-1, events, duration, history));
+        history.put(addedMapID, maximizeOptionalAttendees(temp2, optionalPeople, n-1, events, duration, history));
+        return comparison(history.get(mapID), history.get(addedMapID)) ? history.get(mapID) : history.get(addedMapID); 
+    }
+  }
+
+  private class SchedulingResult{
+    public Integer numOfPeople;
+    public Collection<TimeRange> schedule;
+
+    public SchedulingResult(int num, Collection<TimeRange> schedule){
+        this.numOfPeople = num;
+        this.schedule = schedule;
+    }
+  }
+
+  public Boolean comparison(SchedulingResult left, SchedulingResult right){
+      return left.numOfPeople > right.numOfPeople;
+  }
+
+  public String stringify(ArrayList<String> array){
+      return array.stream().collect(Collectors.joining(" "));
+  }
+
+  
 }

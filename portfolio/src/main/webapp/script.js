@@ -72,20 +72,28 @@ function createListElement(comment) {
     .then((response) => response.text())
     .then((data) => {
       liElement.innerHTML = data;
-      liElement.getElementsByClassName("comment-words")[0].innerText =
-        comment.content;
-      //Add funcitonality to the delete button
+      liElement.getElementsByClassName("comment-words")[0].innerText = comment.content;
       deleteButtonElement = liElement.getElementsByClassName(
         "comment-delete"
       )[0];
       deleteButtonElement.addEventListener("click", () => {
         deleteComment(comment);
-
-        // Remove the comment from the DOM.
         liElement.remove();
       });
-      liElement.getElementsByClassName("comment-date")[0].innerText = comment.date;
-      liElement.getElementsByClassName("comment-user")[0].innerText = comment.user;
+
+      let currentUser = getCurrentUser();
+      currentUser.then((user) => {
+        if (String(comment.user).trim() != String(user).trim()) {
+          liElement.getElementsByClassName("comment-buttons")[0].style.display =
+            "none";
+        }
+      });
+
+      liElement.getElementsByClassName("comment-date")[0].innerText =
+        comment.date;
+      liElement.getElementsByClassName("comment-user")[0].innerText =
+        comment.user;
+      liElement.getElementsByClassName("tag")[0].innerText = comment.tag;
     });
 
   return liElement;
@@ -146,14 +154,25 @@ function displayLoginStatus(){
     });
 }
 
-function setup(){
-    displayLoginStatus();
-    getComments();
+function setup() {
+  displayLoginStatus();
+  getComments();
 }
 
 function createMap() {
   console.log("Making a map");
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 42.295278, lng: -83.710583}, zoom: 12});
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 42.295278, lng: -83.710583 },
+    zoom: 12,
+  });
 }
+
+function getCurrentUser() {
+  let user = fetch("/user")
+    .then((response) => response.text())
+    .then((data) => {
+      return data;
+    });
+  return user;
+}
+

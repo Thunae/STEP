@@ -8,17 +8,19 @@ import com.google.cloud.automl.v1.PredictResponse;
 import com.google.cloud.automl.v1.PredictionServiceClient;
 import com.google.cloud.automl.v1.TextSnippet;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LanguageTextClassificationPredict {
     private String projectId;
     private String modelId;
 
-  public LanguageTextClassificationPredict(){
-    this.projectId = "ryangudal-step-2020";
-    this.modelId = "TCN28315722950115328";
+  public LanguageTextClassificationPredict() {
+    this.projectId = "ryangudal-step";
+    this.modelId = "TCN4253511309586333696";
   }
 
-  public void predict(String content) throws IOException {
+  public List<String> predict(String content) throws IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the "close" method on the client to safely clean up any remaining background resources.
@@ -36,12 +38,11 @@ public class LanguageTextClassificationPredict {
 
       PredictResponse response = client.predict(predictRequest);
 
+      List<String> classification = new ArrayList<>();
       for (AnnotationPayload annotationPayload : response.getPayloadList()) {
-        System.out.format("Predicted class name: %s\n", annotationPayload.getDisplayName());
-        System.out.format(
-            "Predicted sentiment score: %.2f\n\n",
-            annotationPayload.getClassification().getScore());
+        classification.add(annotationPayload.getDisplayName());
       }
+      return classification;
     }
   }
 }

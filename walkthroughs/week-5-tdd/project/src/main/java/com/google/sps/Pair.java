@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.sps.data;
+package com.google.sps;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class Comment {
-    private String content;
-    private Long timestamp;
-    private Long id;
-    private String date;
-    private String user;
-    private String tag;
+public class Pair {
+    private Integer numberOfAttendees;
+    private Collection<TimeRange> schedule;
 
-    public Comment(String content, Long timestamp, Long id, String date, String user, String tag){
-        this.content = content;
-        this.timestamp = timestamp;
-        this.id = id;
-        this.date = date;
-        this.user = user;
-        this.tag = tag;
+    public Pair(Integer numberOfAttendees, Collection<TimeRange> schedule){
+        this.numberOfAttendees = numberOfAttendees;
+        this.schedule = schedule;
+    }
+
+    public int getValue0(){
+        return numberOfAttendees;
+    }
+
+    public Collection<TimeRange> getValue1(){
+        return schedule;
     }
 }
